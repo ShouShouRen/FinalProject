@@ -1,5 +1,6 @@
 from Server.server import server
 from Client.client import client
+from Test import Test
 import signal
 
 
@@ -13,6 +14,8 @@ class Main:
                 self.service = server
             case 'client':
                 self.service = client
+            case 'test':
+                self.service = Test
             case _:
                 self.help()
                 sys.exit(1)
@@ -20,7 +23,7 @@ class Main:
         self.service(self.args)
 
     def help(self):
-        print('''Usage: ./execute [server|client] [args]\n\n使用json格式的參數: {"host":"","port":""}\n''')
+        print('''Usage: ./execute [server|client|test] [args]\n\n使用json格式的參數: {"host":"","port":""}\n''')
 
 
 def signal_handler(signal, frame):
