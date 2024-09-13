@@ -1,7 +1,10 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
 service Greeter {
   rpc UploadFile(stream UploadFileRequest) returns (StringResponse) {}
   rpc DownloadFile(MetaData) returns (stream FileResponse) {}
+  rpc ListFiles(google.protobuf.Empty) returns (FileList) {}
+  rpc DeleteFile(MetaData) returns (StringResponse) {}
 }
 
 message StringResponse {
@@ -20,4 +23,8 @@ message UploadFileRequest {
         MetaData metadata = 1;
         bytes chunk_data = 2;
     }
+}
+// List of file on server
+message FileList {
+    repeated string files = 1;
 }

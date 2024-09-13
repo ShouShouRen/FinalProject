@@ -39,6 +39,15 @@ class Greeter(hello_pb2_grpc.GreeterServicer):
                         yield hello_pb2.FileResponse(chunk_data=chunk)
                     else:
                         return
+    def ListFiles(self, request, context):
+        files = os.listdir(self.uploads_dir)
+        return hello_pb2.FileList(files=files)
+    def DeleteFile(self, request, context):
+        filepath = get_filepath(request.filename, request.extension)
+        if os.path.exists(os.path.join(self.uploads_dir, filepath)):
+            os.remove(os.path.join(self.uploads_dir, filepath))
+            return hello_pb2.StringResponse(message=f'File {filepath} deleted.')
+        return hello_pb2.StringResponse(message=f'File {filepath} not found.')
 
 
 def server(args: list[str]):

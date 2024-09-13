@@ -7,6 +7,7 @@ from os.path import dirname, join, splitext
 import grpc
 from proto import hello_pb2_grpc, hello_pb2
 from Utils.parser import Parser
+from google.protobuf import empty_pb2
 
 
 class Client:
@@ -78,6 +79,13 @@ class Client:
         print("Client Receive: " + ret.message)
         return ret
 
+    def list_files(self):
+        """
+        列出文件。
+        """
+        response = self.client.ListFiles(empty_pb2.Empty())
+        return response.files
+
     def download_file(self, filename: str, extension: str):
         """
         下載文件。
@@ -92,6 +100,16 @@ class Client:
             with open(join(self.downloads_dir, filename), mode="ab") as f:
                 f.write(data.chunk_data)
         print("Client Receive: Download Complete")
+
+    def delete_file(self, filename: str, extension: str):
+        """
+        刪除文件。
+        :param filename: 文件名
+        :param extension: 文件擴展名
+        """
+        response = self.client.DeleteFile(
+            hello_pb2.MetaData(filename=filename, extension=extension))
+        print("Client Receive: " + response.message)
 
     def close(self):
         """
@@ -114,28 +132,91 @@ class MyWindow(QMainWindow):
         connect_address = Parser(self.args).connect_address()
         self.client = Client(connect_address)
         self.client.connect()
+        self.file_reload()
+        self.remote_dir.setCurrentIndex(0)
+        self.selected_file1 = self.remote_dir.currentText()
+        self.remote_dir.mousePressEvent = self.create_mouse_press_event_handler(
+            self.remote_dir.mousePressEvent)
+        self.remote_dir.currentIndexChanged.connect(self.on_file_selected)
+        self.download.clicked.connect(self.on_Download_clicked)
+        self.delete_file.clicked.connect(self.on_Delete_clicked)
+
+    def reset(self):
+        self.selected_file = None
+        self.selected_file1 = None
+
+    def create_mouse_press_event_handler(self, original_event_handler):
+        def new_mouse_press_event(event):
+            self.file_reload()
+            original_event_handler(event)
+        return new_mouse_press_event
+
+    def file_reload(self):
+        self.selected_file1 = self.remote_dir.currentText()
+        self.remote_dir.blockSignals(True)
+        self.remote_dir.clear()
+        files = self.client.list_files()
+        self.remote_dir.addItems([file for file in files])
+        if self.selected_file1:
+            index = self.remote_dir.findText(self.selected_file1)
+            if index >= 0:
+                self.remote_dir.setCurrentIndex(index)
+        self.remote_dir.blockSignals(False)
 
     def on_ChooseLocal_clicked(self):
         file_name, _ = QFileDialog.getOpenFileName(
             self, '選擇文件', '', '所有文件 (*)')
         if file_name:
-            print(f"你選擇的文件: {file_name}")
             self.local_dir.setText(file_name)
             self.selected_file = file_name
 
     def on_Upload_clicked(self):
         if not self.selected_file:
             print("No file selected.")
+            self.local_dir.setText("未選擇文件")
         else:
             try:
                 self.client.upload_file(self.selected_file)
                 self.local_dir.setText("上傳成功")
-                # client.download_file("info", ".txt")
+                self.file_reload()
             except grpc.RpcError as e:
                 print(f"RPC Error: {e.details()}")
                 self.local_dir.setText("上傳失敗")
-    # 關閉前關閉連接
+        self.selected_file = None
 
+    def on_file_selected(self):
+        self.selected_file1 = self.remote_dir.currentText()
+        print(f"Selected file: {self.selected_file1}")
+
+    def on_Download_clicked(self):
+
+        if not self.selected_file1:
+            print("No file selected.")
+            self.local_dir.setText("沒有文件可以下載")
+        else:
+            try:
+                self.client.download_file(*splitext(self.selected_file1))
+                self.local_dir.setText("下載成功")
+            except grpc.RpcError as e:
+                print(f"RPC Error: {e.details()}")
+                self.local_dir.setText("下載失敗")
+
+    def on_Delete_clicked(self):
+        if not self.selected_file1:
+            print("No file selected.")
+            self.local_dir.setText("沒有文件可以刪除")
+        else:
+            try:
+                self.client.delete_file(*splitext(self.selected_file1))
+                self.local_dir.setText("刪除成功")
+                self.file_reload()
+                self.remote_dir.setCurrentIndex(0)
+                self.selected_file1 = self.remote_dir.currentText()
+            except grpc.RpcError as e:
+                print(f"RPC Error: {e.details()}")
+                self.local_dir.setText("刪除失敗")
+
+    # 關閉前關閉連接
     def closeEvent(self, event):
         self.client.close()
         event.accept()

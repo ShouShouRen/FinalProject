@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import proto.hello_pb2 as hello__pb2
 
 GRPC_GENERATED_VERSION = '1.66.1'
@@ -45,6 +46,16 @@ class GreeterStub(object):
             request_serializer=hello__pb2.MetaData.SerializeToString,
             response_deserializer=hello__pb2.FileResponse.FromString,
             _registered_method=True)
+        self.ListFiles = channel.unary_unary(
+            '/Greeter/ListFiles',
+            request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            response_deserializer=hello__pb2.FileList.FromString,
+            _registered_method=True)
+        self.DeleteFile = channel.unary_unary(
+            '/Greeter/DeleteFile',
+            request_serializer=hello__pb2.MetaData.SerializeToString,
+            response_deserializer=hello__pb2.StringResponse.FromString,
+            _registered_method=True)
 
 
 class GreeterServicer(object):
@@ -62,6 +73,18 @@ class GreeterServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListFiles(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteFile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_GreeterServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -74,6 +97,16 @@ def add_GreeterServicer_to_server(servicer, server):
             servicer.DownloadFile,
             request_deserializer=hello__pb2.MetaData.FromString,
             response_serializer=hello__pb2.FileResponse.SerializeToString,
+        ),
+        'ListFiles': grpc.unary_unary_rpc_method_handler(
+            servicer.ListFiles,
+            request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            response_serializer=hello__pb2.FileList.SerializeToString,
+        ),
+        'DeleteFile': grpc.unary_unary_rpc_method_handler(
+            servicer.DeleteFile,
+            request_deserializer=hello__pb2.MetaData.FromString,
+            response_serializer=hello__pb2.StringResponse.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -131,6 +164,60 @@ class Greeter(object):
             '/Greeter/DownloadFile',
             hello__pb2.MetaData.SerializeToString,
             hello__pb2.FileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListFiles(request,
+                  target,
+                  options=(),
+                  channel_credentials=None,
+                  call_credentials=None,
+                  insecure=False,
+                  compression=None,
+                  wait_for_ready=None,
+                  timeout=None,
+                  metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Greeter/ListFiles',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            hello__pb2.FileList.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteFile(request,
+                   target,
+                   options=(),
+                   channel_credentials=None,
+                   call_credentials=None,
+                   insecure=False,
+                   compression=None,
+                   wait_for_ready=None,
+                   timeout=None,
+                   metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Greeter/DeleteFile',
+            hello__pb2.MetaData.SerializeToString,
+            hello__pb2.StringResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,4 +1,5 @@
 from .file import File
+import os
 
 
 class Test:
@@ -18,7 +19,11 @@ class Test:
                 print("Test Case Not Found")
 
     def testFile(self) -> None:
-        File()
+        src_dir: str = os.path.dirname(os.path.dirname(__file__))
+        data_dir: str = os.path.join(src_dir, "Data")
+        uploads_dir: str = os.path.join(data_dir, "uploads")
+        files = os.listdir(uploads_dir)
+        print(files)
 
     def testServer(self) -> None:
         print("Test Server")
