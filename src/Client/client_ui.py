@@ -1,5 +1,4 @@
 import sys
-import time
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt6 import uic
 
