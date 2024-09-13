@@ -104,5 +104,7 @@ def client(args: list[str]):
     try:
         client.upload_file(join(client.data_dir, "info.txt"))
         client.download_file("info", ".txt")
+    except grpc.RpcError as e:
+        print(f"RPC Error: {e.details()}")
     finally:
         client.close()
