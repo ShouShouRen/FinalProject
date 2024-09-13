@@ -35,11 +35,6 @@ class GreeterStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SayHello = channel.unary_unary(
-            '/Greeter/SayHello',
-            request_serializer=hello__pb2.HelloRequest.SerializeToString,
-            response_deserializer=hello__pb2.StringResponse.FromString,
-            _registered_method=True)
         self.UploadFile = channel.stream_unary(
             '/Greeter/UploadFile',
             request_serializer=hello__pb2.UploadFileRequest.SerializeToString,
@@ -54,12 +49,6 @@ class GreeterStub(object):
 
 class GreeterServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def SayHello(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def UploadFile(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
@@ -76,11 +65,6 @@ class GreeterServicer(object):
 
 def add_GreeterServicer_to_server(servicer, server):
     rpc_method_handlers = {
-        'SayHello': grpc.unary_unary_rpc_method_handler(
-            servicer.SayHello,
-            request_deserializer=hello__pb2.HelloRequest.FromString,
-            response_serializer=hello__pb2.StringResponse.SerializeToString,
-        ),
         'UploadFile': grpc.stream_unary_rpc_method_handler(
             servicer.UploadFile,
             request_deserializer=hello__pb2.UploadFileRequest.FromString,
@@ -102,33 +86,6 @@ def add_GreeterServicer_to_server(servicer, server):
 
 class Greeter(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def SayHello(request,
-                 target,
-                 options=(),
-                 channel_credentials=None,
-                 call_credentials=None,
-                 insecure=False,
-                 compression=None,
-                 wait_for_ready=None,
-                 timeout=None,
-                 metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/Greeter/SayHello',
-            hello__pb2.HelloRequest.SerializeToString,
-            hello__pb2.StringResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def UploadFile(request_iterator,

@@ -1,13 +1,9 @@
 syntax = "proto3";
 service Greeter {
-  rpc SayHello (HelloRequest) returns (StringResponse) {}
   rpc UploadFile(stream UploadFileRequest) returns (StringResponse) {}
   rpc DownloadFile(MetaData) returns (stream FileResponse) {}
 }
-message HelloRequest {
-  string name = 1;
-  int32 age = 2;
-}
+
 message StringResponse {
   string message = 1;
 }

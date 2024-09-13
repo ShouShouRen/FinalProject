@@ -16,9 +16,6 @@ class Greeter(hello_pb2_grpc.GreeterServicer):
         self.uploads_dir: str = os.path.join(self.data_dir, "uploads")
         self.chunk_size: int = 1024
 
-    def SayHello(self, request, context):
-        return hello_pb2.StringResponse(message=f'Hello, {request.name}! Your age is {request.age}')
-
     def UploadFile(self, request_iterator, context):
         data: bytearray = bytearray()
         for request in request_iterator:
