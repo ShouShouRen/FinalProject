@@ -124,10 +124,13 @@ class MyWindow(QMainWindow):
         super().__init__()
         uipath = join(dirname(__file__), 'client.ui')
         uic.loadUi(uipath, self)
+        self.login.clicked.connect(self.on_Login_clicked)
         self.choose_local.clicked.connect(self.on_ChooseLocal_clicked)
         self.upload.clicked.connect(self.on_Upload_clicked)
         self.selected_file = None
         self.args = args
+        self.stackedWidget.setCurrentIndex(0)
+        self.message.hide()
         connect_address = Parser(self.args).connect_address()
         self.client = Client(connect_address)
         self.client.connect()
@@ -162,6 +165,17 @@ class MyWindow(QMainWindow):
                 self.remote_dir.setCurrentIndex(index)
         self.remote_dir.blockSignals(False)
 
+    def on_Login_clicked(self):
+        username = self.username.text()
+        password = self.password.text()
+
+        if username == 'admin' and password == 'password':
+            self.stackedWidget.setCurrentIndex(1)
+        else:
+            print("Invalid username or password!")
+            self.message.show()
+            self.message.setText("無效的用戶名或密碼")
+
     def on_ChooseLocal_clicked(self):
         file_name, _ = QFileDialog.getOpenFileName(
             self, '選擇文件', '', '所有文件 (*)')
@@ -182,6 +196,7 @@ class MyWindow(QMainWindow):
                 print(f"RPC Error: {e.details()}")
                 self.local_dir.setText("上傳失敗")
         self.selected_file = None
+        self.selected_file1 = self.remote_dir.currentText()
 
     def on_file_selected(self):
         self.selected_file1 = self.remote_dir.currentText()
