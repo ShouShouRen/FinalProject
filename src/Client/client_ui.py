@@ -4,6 +4,7 @@ from PyQt6 import uic
 from .UI import Ui_mainWindow
 
 from os.path import dirname, join, splitext
+from os import makedirs
 import grpc
 from proto import hello_pb2_grpc, hello_pb2
 from Utils.parser import Parser
@@ -22,6 +23,8 @@ class Client:
         self.data_dir: str = join(self.src_dir, "Data")
         self.uploads_dir: str = join(self.data_dir, "uploads")
         self.downloads_dir: str = join(self.data_dir, "downloads")
+
+        makedirs(self.downloads_dir, exist_ok=True)
 
     def connect(self, timeout=5):
         """
