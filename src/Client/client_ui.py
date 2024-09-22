@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt6 import uic
+from .UI import Ui_mainWindow
 
 from os.path import dirname, join, splitext
 import grpc
@@ -119,11 +120,12 @@ class Client:
             print("Connection closed.")
 
 
-class MyWindow(QMainWindow):
+class MyWindow(QMainWindow, Ui_mainWindow):
     def __init__(self, args: list[str]):
         super().__init__()
-        uipath = join(dirname(__file__), 'client.ui')
-        uic.loadUi(uipath, self)
+        self.setupUi(self)
+        # uipath = join(dirname(__file__), 'client.ui')
+        # uic.loadUi(uipath, self)
         self.login.clicked.connect(self.on_Login_clicked)
         self.choose_local.clicked.connect(self.on_ChooseLocal_clicked)
         self.upload.clicked.connect(self.on_Upload_clicked)
