@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "csstools.postcss",
+    "esbenp.prettier-vscode",
+    "ms-python.python",
+    "ritwickdey.liveserver",
+    "ms-vscode.vscode-typescript-next",
+    "yoavbls.pretty-ts-errors",
+    "pmneo.tsimporter",
+    "ms-python.autopep8",
+    "editorconfig.editorconfig",
+    "carbonid1.emmet-jss",
+    "usernamehw.errorlens",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "xabikos.javascriptsnippets",
+    "glenn2223.live-sass",
+    "christian-kohler.path-intellisense",
+    "rvest.vs-code-prettier-eslint",
+    "vscode-icons-team.vscode-icons"
+  ]
+}
