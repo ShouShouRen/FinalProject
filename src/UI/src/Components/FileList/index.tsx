@@ -2,11 +2,11 @@ import Local from './Local';
 import Remote from './Remote';
 const FileList = () => {
   return (
-    <div className='flex flex-row w-full h-full gap-2'>
-      <div className='flex-1 overflow-auto'>
+    <div className='flex flex-row gap-2 h-[25vh]'>
+      <div className='w-1/2 h-full'>
         <Local />
       </div>
-      <div className='flex-1'>
+      <div className='w-1/2 h-full'>
         <Remote />
       </div>
     </div>
