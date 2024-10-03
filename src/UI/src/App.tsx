@@ -20,12 +20,12 @@ import { ToolBar, Login, ConnectStatus, FileList, SingleDir, SendStatus } from '
 
 const App = () => {
   return (
-    <div className='grid grid-rows-[auto_auto_1fr_auto] h-screen min-w-full bg-gray-700 gap-1 p-2'>
-      <div className='space-y-2'>
+    <div className='grid grid-rows-[auto_auto_2fr_auto] h-screen min-w-full bg-gray-700 gap-1 p-2'>
+      <div>
         <ToolBar />
         <Login />
       </div>
-      <div className='h-32'>
+      <div className='h-28'>
         <ConnectStatus />
       </div>
 
@@ -37,7 +37,7 @@ const App = () => {
           <SingleDir />
         </div>
       </div>
-      <div className='h-32'>
+      <div className='h-28'>
         <SendStatus />
       </div>
     </div>
