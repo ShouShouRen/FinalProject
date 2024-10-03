@@ -78,7 +78,7 @@ const Local = () => {
       return (
         <div
           key={item.name}
-          className='p-2 m-2 bg-white border rounded'
+          className='p-2 m-2 ml-6 bg-white border rounded'
           onContextMenu={(event) => handleContextMenu(event, 'file', item.name)}
         >
           📄 {item.name}
@@ -120,7 +120,7 @@ const Local = () => {
   };
 
   return (
-    <div className='h-full px-2 py-1 bg-gray-500 border-2 rounded'>
+    <div className='h-full px-2 py-1 bg-gray-500'>
       {/* 設置滾動區域 */}
       <div className='overflow-auto min-h-60'>
         {/* 渲染文件夾結構 */}

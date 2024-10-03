@@ -16,7 +16,7 @@
 
 // export default App;
 
-import { ToolBar, Login, ConnectStatus, FileList, SingleDir, SendStatus } from './Components';
+import { ToolBar, Login, ConnectStatus, FileList, SingleDir, SendStatus } from '@components';
 
 const App = () => {
   return (
