@@ -2,9 +2,13 @@ import Local from './Local';
 import Remote from './Remote';
 const SingleDir = () => {
   return (
-    <div id='SingleDir' className='flex flex-row justify-center space-x-1 mt-1 h-48'>
-      <Local />
-      <Remote />
+    <div className='flex flex-row w-full h-full gap-2'>
+      <div className='flex-1'>
+        <Local />
+      </div>
+      <div className='flex-1'>
+        <Remote />
+      </div>
     </div>
   );
 };

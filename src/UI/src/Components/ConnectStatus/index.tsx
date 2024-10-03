@@ -1,8 +1,9 @@
 const ConnectStatus = () => {
-  return( 
-    <div className="h-[104px] bg-gray-500 border-2 px-2 py-1 mt-1">Status</div>
+  return (
+    <div className='w-full h-full p-2 overflow-auto bg-gray-500 border rounded'>
+      <div className='flex items-center w-full h-full px-4'>Status</div>
+    </div>
   );
-
 };
 
 export default ConnectStatus;
