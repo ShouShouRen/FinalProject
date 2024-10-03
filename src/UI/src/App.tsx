@@ -29,7 +29,7 @@ const App = () => {
         <ConnectStatus />
       </div>
 
-      <div className='grid grid-rows-2 gap-1 overflow-hidden'>
+      <div className='grid grid-rows-2 gap-1'>
         <div className='grid grid-cols-1 gap-1'>
           <FileList />
         </div>
