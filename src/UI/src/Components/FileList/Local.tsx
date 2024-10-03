@@ -122,7 +122,7 @@ const Local = () => {
   return (
     <div className='h-full px-2 py-1 bg-gray-500 border-2 rounded'>
       {/* 設置滾動區域 */}
-      <div className='min-h-60'>
+      <div className='overflow-auto min-h-60'>
         {/* 渲染文件夾結構 */}
         {renderFileTree(fileStructure)}
       </div>
