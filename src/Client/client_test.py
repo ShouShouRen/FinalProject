@@ -38,7 +38,7 @@ class Api:
                 is_leaf = not os.path.isdir(entry_path)
                 children.append({
                     "title": entry,
-                    "key": os.path.relpath(entry_path, self.base_dir),
+                    "key": entry_path,
                     "isLeaf": is_leaf
                 })
             return json.dumps(children)
