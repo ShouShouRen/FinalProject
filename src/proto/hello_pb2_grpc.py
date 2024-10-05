@@ -6,7 +6,7 @@ import warnings
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import proto.hello_pb2 as hello__pb2
 
-GRPC_GENERATED_VERSION = '1.66.1'
+GRPC_GENERATED_VERSION = '1.66.2'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -56,6 +56,11 @@ class GreeterStub(object):
             request_serializer=hello__pb2.MetaData.SerializeToString,
             response_deserializer=hello__pb2.StringResponse.FromString,
             _registered_method=True)
+        self.Login = channel.unary_unary(
+            '/Greeter/Login',
+            request_serializer=hello__pb2.LoginRequest.SerializeToString,
+            response_deserializer=hello__pb2.StringResponse.FromString,
+            _registered_method=True)
 
 
 class GreeterServicer(object):
@@ -85,6 +90,12 @@ class GreeterServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Login(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_GreeterServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -106,6 +117,11 @@ def add_GreeterServicer_to_server(servicer, server):
         'DeleteFile': grpc.unary_unary_rpc_method_handler(
             servicer.DeleteFile,
             request_deserializer=hello__pb2.MetaData.FromString,
+            response_serializer=hello__pb2.StringResponse.SerializeToString,
+        ),
+        'Login': grpc.unary_unary_rpc_method_handler(
+            servicer.Login,
+            request_deserializer=hello__pb2.LoginRequest.FromString,
             response_serializer=hello__pb2.StringResponse.SerializeToString,
         ),
     }
@@ -217,6 +233,33 @@ class Greeter(object):
             target,
             '/Greeter/DeleteFile',
             hello__pb2.MetaData.SerializeToString,
+            hello__pb2.StringResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Login(request,
+              target,
+              options=(),
+              channel_credentials=None,
+              call_credentials=None,
+              insecure=False,
+              compression=None,
+              wait_for_ready=None,
+              timeout=None,
+              metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Greeter/Login',
+            hello__pb2.LoginRequest.SerializeToString,
             hello__pb2.StringResponse.FromString,
             options,
             channel_credentials,

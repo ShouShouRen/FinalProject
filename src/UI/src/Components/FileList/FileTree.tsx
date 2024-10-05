@@ -88,7 +88,9 @@ const FileTree: React.FC<FileTreeProps> = ({
 
   const fetchChildren = async (key: React.Key): Promise<TreeDataNode[]> => {
     try {
-      const children = await window.pywebview.api.get_children(key);
+      const children = await (isLocal
+        ? window.pywebview.api.get_local_children(key)
+        : window.pywebview.api.get_server_children(key));
       const ret = JSON.parse(children);
 
       if ('error' in ret) {

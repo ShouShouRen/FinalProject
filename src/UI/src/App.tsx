@@ -1,14 +1,16 @@
 import { ToolBar, Login, ConnectStatus, FileList, SendStatus } from '@components';
+import { useState } from 'react';
 
 const App = () => {
+  const [message, setMessage] = useState<string>('');
   return (
     <div className='grid grid-rows-[auto_auto_2fr_auto] h-screen min-w-full bg-gray-700 gap-1 p-2'>
       <div>
         <ToolBar />
-        <Login />
+        <Login setMessage={setMessage} />
       </div>
       <div className='h-28'>
-        <ConnectStatus />
+        <ConnectStatus message={message} />
       </div>
 
       <div className='grid grid-rows-1 gap-1'>

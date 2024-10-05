@@ -5,6 +5,7 @@ service Greeter {
   rpc DownloadFile(MetaData) returns (stream FileResponse) {}
   rpc ListFiles(google.protobuf.Empty) returns (FileList) {}
   rpc DeleteFile(MetaData) returns (StringResponse) {}
+  rpc Login(LoginRequest) returns (StringResponse) {}
 }
 
 message StringResponse {
@@ -27,4 +28,8 @@ message UploadFileRequest {
 // List of file on server
 message FileList {
     repeated string files = 1;
+}
+message LoginRequest {
+    string username = 1;
+    string password = 2;
 }

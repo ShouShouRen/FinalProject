@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+interface LoginProps {
+  setMessage: (message: string) => void;
+}
 
-const Login = () => {
-  const [Host, setHost] = useState<string>('');
+const Login: React.FC<LoginProps> = ({ setMessage }) => {
+  const [Host, setHost] = useState<string>('127.0.0.1');
   const [Username, setUsername] = useState<string>('');
   const [Password, setPassword] = useState<string>('');
-  const [Port, setPort] = useState<string>('');
-  const Connect = () => {
-    console.log('Host:', Host);
-    console.log('Username:', Username);
-    console.log('Password:', Password);
-    console.log('Port:', Port);
-    console.log('Connect');
+  const [Port, setPort] = useState<string>('50051');
+  const Connect = async () => {
+    if (window.pywebview) {
+      if (Host === '' || Port === '' || Username === '' || Password === '') {
+        setMessage('請輸入完整資訊');
+        return;
+      }
+      const ret = await window.pywebview.api.login(Host, Port, Username, Password);
+      const data = JSON.parse(ret);
+      if ('error' in data) {
+        setMessage(data.error);
+      } else setMessage(data.message);
+    } else setMessage('請在pywebview環境下使用');
   };
   return (
     <div className='flex flex-wrap items-center justify-start p-2 bg-gray-500 border border-white gap-7'>

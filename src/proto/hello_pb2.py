@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bhello.proto\x1a\x1bgoogle/protobuf/empty.proto\"!\n\x0eStringResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\"\n\x0c\x46ileResponse\x12\x12\n\nchunk_data\x18\x01 \x01(\x0c\"/\n\x08MetaData\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12\x11\n\textension\x18\x02 \x01(\t\"S\n\x11UploadFileRequest\x12\x1d\n\x08metadata\x18\x01 \x01(\x0b\x32\t.MetaDataH\x00\x12\x14\n\nchunk_data\x18\x02 \x01(\x0cH\x00\x42\t\n\x07request\"\x19\n\x08\x46ileList\x12\r\n\x05\x66iles\x18\x01 \x03(\t2\xcc\x01\n\x07Greeter\x12\x35\n\nUploadFile\x12\x12.UploadFileRequest\x1a\x0f.StringResponse\"\x00(\x01\x12,\n\x0c\x44ownloadFile\x12\t.MetaData\x1a\r.FileResponse\"\x00\x30\x01\x12\x30\n\tListFiles\x12\x16.google.protobuf.Empty\x1a\t.FileList\"\x00\x12*\n\nDeleteFile\x12\t.MetaData\x1a\x0f.StringResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bhello.proto\x1a\x1bgoogle/protobuf/empty.proto\"!\n\x0eStringResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\"\n\x0c\x46ileResponse\x12\x12\n\nchunk_data\x18\x01 \x01(\x0c\"/\n\x08MetaData\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12\x11\n\textension\x18\x02 \x01(\t\"S\n\x11UploadFileRequest\x12\x1d\n\x08metadata\x18\x01 \x01(\x0b\x32\t.MetaDataH\x00\x12\x14\n\nchunk_data\x18\x02 \x01(\x0cH\x00\x42\t\n\x07request\"\x19\n\x08\x46ileList\x12\r\n\x05\x66iles\x18\x01 \x03(\t\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t2\xf7\x01\n\x07Greeter\x12\x35\n\nUploadFile\x12\x12.UploadFileRequest\x1a\x0f.StringResponse\"\x00(\x01\x12,\n\x0c\x44ownloadFile\x12\t.MetaData\x1a\r.FileResponse\"\x00\x30\x01\x12\x30\n\tListFiles\x12\x16.google.protobuf.Empty\x1a\t.FileList\"\x00\x12*\n\nDeleteFile\x12\t.MetaData\x1a\x0f.StringResponse\"\x00\x12)\n\x05Login\x12\r.LoginRequest\x1a\x0f.StringResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -42,6 +42,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_UPLOADFILEREQUEST']._serialized_end=247
   _globals['_FILELIST']._serialized_start=249
   _globals['_FILELIST']._serialized_end=274
-  _globals['_GREETER']._serialized_start=277
-  _globals['_GREETER']._serialized_end=481
+  _globals['_LOGINREQUEST']._serialized_start=276
+  _globals['_LOGINREQUEST']._serialized_end=326
+  _globals['_GREETER']._serialized_start=329
+  _globals['_GREETER']._serialized_end=576
 # @@protoc_insertion_point(module_scope)

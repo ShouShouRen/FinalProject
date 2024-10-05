@@ -51,7 +51,10 @@ class Greeter(hello_pb2_grpc.GreeterServicer):
             remove(join(self.uploads_dir, filepath))
             return hello_pb2.StringResponse(message=f'File {filepath} deleted.')
         return hello_pb2.StringResponse(message=f'File {filepath} not found.')
-
+    def Login(self, request, context):
+        if request.username == "admin" and request.password == "admin":
+            return hello_pb2.StringResponse(message="Login successful")
+        return hello_pb2.StringResponse(message="Login failed. Incorrect username or password")
 
 def server(args: list[str]):
     connect_address = Parser(args).connect_address()
