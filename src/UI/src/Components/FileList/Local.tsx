@@ -171,7 +171,7 @@ const initialTreeData = [
 ];
 export default function Local() {
   return (
-    <div className='h-[491px] px-2 py-1 overflow-auto bg-gray-500 border-2 rounded'>
+    <div className='h-full px-2 py-1 bg-gray-500 border-2 rounded'>
       <FileTree onNodeSelect={handleNodeSelect} initialTreeData={initialTreeData} isLocal={true} />
     </div>
   );

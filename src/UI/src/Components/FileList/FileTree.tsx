@@ -36,7 +36,10 @@ const FolderMenu = ({
 }) => (
   <Menu id={folderMenuId}>
     <Item onClick={() => onOpenFolder(nodeKey)}>開啟資料夾</Item>
-    <Item onClick={() => console.log('刪除資料夾')} disabled={nodeTitle === '根目錄'}>
+    <Item
+      onClick={() => console.log('刪除資料夾')}
+      disabled={nodeTitle === '根目錄' || nodeTitle === 'downloads'}
+    >
       刪除資料夾
     </Item>
     <Item onClick={() => console.log('新增檔案')}>新增檔案</Item>
@@ -62,11 +65,31 @@ const FileTree: React.FC<FileTreeProps> = ({
     setExpandedKeys(isLocal ? ['localStorage'] : ['uploads']);
   }, []);
 
+  const updateTreeData = (
+    treeData: TreeDataNode[],
+    key: React.Key,
+    children: TreeDataNode[],
+  ): TreeDataNode[] => {
+    return treeData.map((node) => {
+      if (node.key === key) {
+        return {
+          ...node,
+          children,
+        };
+      } else if (node.children) {
+        return {
+          ...node,
+          children: updateTreeData(node.children, key, children),
+        };
+      }
+      return node;
+    });
+  };
+
   const fetchChildren = async (key: React.Key): Promise<TreeDataNode[]> => {
     try {
       const children = await window.pywebview.api.get_children(key);
       const ret = JSON.parse(children);
-      console.log(ret);
 
       if ('error' in ret) {
         console.error('Error:', ret.error);
@@ -85,27 +108,14 @@ const FileTree: React.FC<FileTreeProps> = ({
       return Promise.resolve();
     }
     return fetchChildren(key).then((newChildren) => {
-      setTreeData((origin) =>
-        origin.map((node) => {
-          if (node.key === key) {
-            return { ...node, children: newChildren };
-          }
-          return node;
-        }),
-      );
+      setTreeData((origin) => updateTreeData(origin, key, newChildren));
     });
   };
-
-  // 處理右鍵菜單
   const handleContextMenu = (event: React.MouseEvent, node: TreeDataNode) => {
     event.preventDefault();
-
-    // 將 node.title 轉換為字串
     const nodeTitle = typeof node.title === 'string' ? node.title : String(node.title);
     setSelectedNodeTitle(nodeTitle);
     setRightClickNodeKey(node.key);
-
-    // 顯示不同的菜單
     if (node.isLeaf) {
       contextMenu.show({
         id: fileMenuId,
@@ -146,7 +156,6 @@ const FileTree: React.FC<FileTreeProps> = ({
         expandedKeys={expandedKeys}
         onRightClick={({ event, node }) => handleContextMenu(event, node)}
         onExpand={(expandedKeys) => setExpandedKeys(expandedKeys)}
-        height={491}
       />
       <FileMenu isLocal={isLocal} />
       {rightClickNodeKey !== null && (
