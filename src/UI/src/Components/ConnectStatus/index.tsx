@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { List } from 'antd';
+import { List, Space } from 'antd';
 
 interface ConnectStatusProps {
   message: string;
@@ -25,14 +25,16 @@ const ConnectStatus: React.FC<ConnectStatusProps> = ({ message }) => {
       className='w-full h-full p-2 overflow-auto bg-gray-500 border'
       style={{ maxHeight: '400px' }}
     >
-      <List
-        dataSource={messages}
-        renderItem={(msg, index) => (
-          <List.Item key={index} style={{ paddingTop: '2px', paddingBottom: '2px' }}>
-            <div className='flex items-center w-full h-full px-2 text-white'>{msg}</div>
-          </List.Item>
-        )}
-      />
+      <Space direction='vertical'>
+        <List
+          dataSource={messages}
+          renderItem={(msg, index) => (
+            <List.Item key={index} style={{ paddingTop: '2px', paddingBottom: '2px' }}>
+              <div className='flex items-center w-full h-full px-2 text-white'>{msg}</div>
+            </List.Item>
+          )}
+        />
+      </Space>
     </div>
   );
 };
