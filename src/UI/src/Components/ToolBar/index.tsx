@@ -102,31 +102,29 @@ const ToolBar = () => {
                   <List.Item
                     key={index}
                     onClick={() => handleEdit(item)}
-                    className='text-lg cursor-pointer'
+                    className='text-lg cursor-pointer w-full'
                   >
-                    <Flex justify='space-between' align='center'>
-                      <Text>{`${item.name}`}</Text>
-                      <div>
-                        <Button
-                          className='ml-2'
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(item);
-                          }}
-                        >
-                          刪除
-                        </Button>
-                        <Button
-                          className='ml-2'
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleConnect(item);
-                          }}
-                        >
-                          連線
-                        </Button>
-                      </div>
-                    </Flex>
+                    <p>{`${item.name}`}</p>
+                    <div>
+                      <Button
+                        className='ml-2'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(item);
+                        }}
+                      >
+                        刪除
+                      </Button>
+                      <Button
+                        className='ml-2'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleConnect(item);
+                        }}
+                      >
+                        連線
+                      </Button>
+                    </div>
                   </List.Item>
                 )}
               />
